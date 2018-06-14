@@ -8,7 +8,8 @@ class MarkdownNode {
       this.parent = parent;
       this.nest = parent.nest + 1;
       parent.child.push(this);
-      var pathName = text.split(':')[0].trim();
+      var ary = text.split(':')
+      var pathName = ary[ary.length - 1].trim();
       this.path = parent.isRoot() ? pathName : `${parent.path}.${pathName}`;
     } else {
       this.nest = 0;
