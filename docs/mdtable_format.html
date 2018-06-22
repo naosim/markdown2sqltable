@@ -14,12 +14,16 @@ c1 | c2 | c3
 Mr.日本語太郎 | hoge | f
 英語ジローーーーラモ | baaaaaaaaar | p
 </textarea>
-<button ="runButton", >run</button>
+<button ="runButton" >run</button>
 <textarea id="output"></textarea>
 
 <script>
 const LONG_SPACE = '                                                                                        '
 const SPACE_COUNT = 2;//前後のスペース
+
+function createSpace(length) {
+  return LONG_SPACE.slice(0, length);
+}
 String.prototype.widthCount = function() {
   const getWidth = (char) => char.match(/^[^\x01-\x7E\xA1-\xDF]+$/) ? 2 : 1;
   return this.split('').reduce((memo, char) => {
@@ -53,7 +57,7 @@ function putSpace(text, maxWidthCount) {
   // if(widthCount + 1 == maxWidthCount) {
   //   return `${text} `;
   // }
-  return ` ${text}${LONG_SPACE.slice(0, maxWidthCount - widthCount - (SPACE_COUNT - 1))}`
+  return ` ${text}${createSpace(maxWidthCount - widthCount - (SPACE_COUNT - 1))}`
 }
 
 function convert(input) {
@@ -65,7 +69,7 @@ function convert(input) {
   
   // return maxWidthCountList.join(', ');
   var result = header.map((v, i) => putSpace(v, maxWidthCountList[i])).join('|') + '\n';
-  result += maxWidthCountList.map(v => LONG_SPACE.slice(0, v).split(' ').join('-')).join('|') + '\n';
+  result += maxWidthCountList.map(v => createSpace(v).split(' ').join('-')).join('|') + '\n';
   result += bodyLines.map(line => line.map((v, i) => putSpace(v, maxWidthCountList[i])).join('|')).join('\n')
   return result
 }
