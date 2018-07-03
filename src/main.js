@@ -80,14 +80,14 @@ function convert(input, outRootDir) {
       .slice(1)
       .map(v => v.split('|').map(v => new Cell(v.trim())))
       .map(v => {
-        const columnName = v[2].value
+        const columnName = v[1].value
         return {
           columnName:columnName, 
-          type:v[6].value, 
-          isNotNull: !v[7].isEmpty, 
+          type:v[5].value, 
+          isNotNull: !v[6].isEmpty, 
           other: '',// なし 
-          indexes: v[5].getOrDefault(v => [`idx_${tableName}_${columnName}`], []),
-          isPk: !v[3].isEmpty
+          indexes: v[4].getOrDefault(v => [`idx_${tableName}_${columnName}`], []),
+          isPk: !v[2].isEmpty
         }
       })
       ;
